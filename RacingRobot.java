@@ -1,65 +1,51 @@
-import java.util.Random;
-public class RacingRobot{
-	private int id;
-	private static int maxId;
-	private String name;
-	private int distance;
-	private int energy;
-	private int speed;
+public class RacingRobot extends Robot{
+	protected FootParts footParts;
+	protected int speed;
 
-	public RacingRobot(int id, String name, int distance, int energy, int speed){
-		this.id = id;
-		maxId = id;
-		this.name = name;
-		this.distance = distance;
-		this.energy = energy;
+	public RacingRobot(int id, String name, int distance, int energy, int speed, FootParts footParts){
+		super(id, name, distance, energy);
 		this.speed = speed;
+		this.footParts = footParts;
+
+	}
+
+	public RacingRobot(String name, int speed){
+		this(++maxId, name, 0, 100, 15, new FootParts(speed));
 	}
 
 	public RacingRobot(String name){
-		this(++maxId, name, 0, 100,new Random().nextInt(50)+50);
+		this(name, 10);
 	}
 
-	public int getId(){
-		return id;
+	public void run(){
+		if(isRunning()){
+			energy = energy - 20;
+			distance += speed + footParts.getSpeed();
+		}
 	}
 
-	public void setId(int id){
-		this.id = id;
+	public boolean isRunning(){
+		return energy >= 0;
 	}
 
-	public String getName(){
-		return name;
-	}
-
-	public void setName(String name){
-		this.name = name;
-	}
-
-	public int getDistance(){
-		return distance;
-	}
-
-	public void setDistance(int distance){
-		this.distance = distance;
-	}
-
-	public int getEnergy(){
-		return energy;
-	}
-
-	public void setEnergy(int energy){
-		this.energy = energy;
-	}
 	public int getSpeed(){
 		return speed;
 	}
+
 	public void setSpeed(int speed){
 		this.speed = speed;
-	}	
+	}
 
-	
+	public FootParts getSpeed(int speed){
+		return footParts;
+	}
+
+	public void setFootParts(FootParts footParts){
+		this.footParts = footParts;
+	}
+
 	public String getInfo(){
-		return String.format("Robot(id=%d, name=%s, energy=%d, distance=%d, footparts(speed=%d))", id, name, energy, distance, speed);
+		return String.format("RacingRobot(id=%2d, name=%9s, energy=%d, distance=%3d, %s)", id, name, energy, distance, footParts.getInfo());
 	}
 }
+

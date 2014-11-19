@@ -5,6 +5,5 @@ class Ran{
 		Random rnd = new Random();
 
 		int ran = rnd.nextInt(50) + 50;
-		System.out.println(ran);
 		}
 }
